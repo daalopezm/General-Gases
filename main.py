@@ -17,10 +17,12 @@ def run():
     
     canvas = Canvas(window,width=WIDTH,height=HEIGHT)
     button_1 = Button(window, text="Ideal Gas")
+    button_2 = Button(window, text="Leonnard-Jones")
     label_1 = Label(window,text="Ideal Gas")
 
     label_1.grid(row=1, column=1)
     button_1.grid(row=0, column=0)
+    button_2.grid(row=1, column=0)
     canvas.grid(row=0, column=1)
     
 
