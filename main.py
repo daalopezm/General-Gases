@@ -8,19 +8,7 @@ from functools import partial
 
 number_of_particles=1
 
-def change_number_of_particles(entry):
-    global number_of_particles
-    try:
-        if entry.get().isnumeric() == True:             
-            number_of_particles = int(entry.get())
-        else:
-            raise ValueError("No se puede ingresar letras")
-            messagebox.showinfo("Error", "No se puede ingresar letras")
-    except ValueError as ve:
-        print(ve)
-    
-def stop_program(canvas):
-    canvas.delete("all")
+
 
 def run():
 
@@ -32,6 +20,23 @@ def run():
     Volumen = namedtuple('Volumen','width, height')    
     canvas = Canvas(window,width=WIDTH,height=HEIGHT, highlightthickness=4, highlightbackground="black")
     label = " "
+    label_1 = Label(window, text = label)
+    label_1.grid(row=1, column=1)
+
+    def change_number_of_particles(entry):
+        global number_of_particles
+        try:
+            if entry.get().isnumeric() == True:             
+                number_of_particles = int(entry.get())
+            else:
+                messagebox.showinfo("Error", "No se puede ingresar letras")
+                raise ValueError("No se puede ingresar letras")
+                
+        except ValueError as ve:
+            print(ve)
+        
+    def stop_program(canvas):
+        canvas.delete("all")
 
     def simulate(window, interaction):
         stop_program(canvas)
@@ -43,8 +48,7 @@ def run():
             label = "Ideal gas"
         else:
             label = " "
-        label_1 = Label(window, text = label)
-        label_1.grid(row=1, column=1)
+        
         print(number_of_particles)
         particles = gas.create_gas()
         while True:        
