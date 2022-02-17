@@ -1,5 +1,6 @@
 from tkinter import *
 import time
+from tkinter import messagebox
 from Ball import *
 from gas import *
 from collections import namedtuple
@@ -14,6 +15,7 @@ def change_number_of_particles(entry):
             number_of_particles = int(entry.get())
         else:
             raise ValueError("No se puede ingresar letras")
+            messagebox.showinfo("Error", "No se puede ingresar letras")
     except ValueError as ve:
         print(ve)
     
