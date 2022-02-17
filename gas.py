@@ -14,8 +14,8 @@ class Gas:
         self.canvas = canvas
     
     def create_gas(self):
-        max_x_velocity=20
-        max_y_velocity=20
+        max_x_velocity=4
+        max_y_velocity=4
 
         radius = 5
         Color = namedtuple('Color', 'red green blue')
@@ -32,11 +32,7 @@ class Gas:
             initial_velocity_x[i], initial_velocity_y[i], radius, 
             colors_depending_on_velocity(initial_velocity_x[i], initial_velocity_y[i])) for i in range(self.number_of_particles)]
 
-        return particles
-
-    def move_gas(self, particles):
-        for i in range(self.number_of_particles):
-            particles[i].move()
+        return particles     
 
     
     def coulomb_interaction(self, charge, mass, initial_position_x, initial_position_y, initial_velocity_x, initial_velocity_y):
@@ -44,25 +40,46 @@ class Gas:
         final_velocity_y = []
         interaction_matrix_x=np.zeros((self.number_of_particles,self.number_of_particles))
         interaction_matrix_y=np.zeros((self.number_of_particles,self.number_of_particles))
-        k = 0.1
+        k = 1
         delta_t = 0.01
-        for i in range(len(initial_position_x)):
-            for j in range(len(initial_position_x)):
+        for i in range(self.number_of_particles):
+            for j in range(self.number_of_particles):
                 if i < j:
-                    interaction_matrix_x[i][j]=(k*charge/mass)*charge/(
+                    interaction_matrix_x[i][j]=-(k*charge/mass)*charge/(
                         (initial_position_x[i]-initial_position_x[j])**2+(initial_position_y[i]-initial_position_y[j])**2)**1.5*(
                             initial_position_x[i]-initial_position_x[j])
 
                     interaction_matrix_x[j][i]=-interaction_matrix_x[i][j]
 
-                    interaction_matrix_y[i][j]=(k*charge/mass)*charge/(
+                    interaction_matrix_y[i][j]=-(k*charge/mass)*charge/(
                         (initial_position_x[i]-initial_position_x[j])**2+(initial_position_y[i]-initial_position_y[j])**2)**1.5*(
                             initial_position_y[i]-initial_position_y[j])
 
                     interaction_matrix_y[j][i]=-interaction_matrix_y[i][j]
 
-        for i in range(len(initial_position_x)):
-            final_velocity_x[i] = np.sum(interaction_matrix_x,axis=i)*delta_t + initial_velocity_x[i]
-            final_velocity_y[i] = np.sum(interaction_matrix_y,axis=i)*delta_t + initial_velocity_y[i]
+            sum_colum_interaction_matrix_x=np.sum(interaction_matrix_x,axis=0)
+            sum_colum_interaction_matrix_y=np.sum(interaction_matrix_y,axis=0)
 
-        return final_velocity_x, final_velocity_x
+        for i in range(self.number_of_particles):
+
+            final_velocity_x.append(sum_colum_interaction_matrix_x[i]*delta_t + initial_velocity_x[i])
+            final_velocity_y.append(sum_colum_interaction_matrix_y[i]*delta_t + initial_velocity_y[i])
+
+        return final_velocity_x, final_velocity_y
+
+    def move_gas(self, particles):
+        if self.interaction == 'col':
+            initial_x_position = [particles[i].x_position for i in range(self.number_of_particles)]
+            initial_y_position = [particles[i].y_position for i in range(self.number_of_particles)]
+            initial_x_velocity = [particles[i].x_velocity for i in range(self.number_of_particles)]
+            initial_y_velocity = [particles[i].y_velocity for i in range(self.number_of_particles)]
+
+            final_x_velocity, final_y_velocity = self.coulomb_interaction(
+                    500, 5, initial_x_position, initial_y_position, initial_x_velocity, initial_y_velocity)
+
+            for i in range(self.number_of_particles):                
+                particles[i].move(final_x_velocity[i],final_y_velocity[i])   
+
+        else:
+            for i in range(self.number_of_particles):                
+                particles[i].move(particles[i].x_velocity,particles[i].y_velocity)   
