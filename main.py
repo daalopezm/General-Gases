@@ -20,8 +20,6 @@ def run():
     Volumen = namedtuple('Volumen','width, height')    
     canvas = Canvas(window,width=WIDTH,height=HEIGHT, highlightthickness=4, highlightbackground="black")
     label = " "
-    label_1 = Label(window, text = label)
-    label_1.grid(row=1, column=1)
 
     def change_number_of_particles(entry):
         global number_of_particles
@@ -48,7 +46,8 @@ def run():
             label = "Ideal gas"
         else:
             label = " "
-        
+        label_1 = Label(window, text = label)
+        label_1.grid(row=1, column=1)
         print(number_of_particles)
         particles = gas.create_gas()
         while True:        
