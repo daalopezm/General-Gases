@@ -11,7 +11,7 @@ class Ball:
 
     def move(self,latest_x_velocity, latest_y_velocity):
         coordinates = self.canvas.coords(self.figure)
-        print(coordinates)        
+        #print(coordinates)        
         if(coordinates[2]>=(self.canvas.winfo_width()) or coordinates[0]<0):
             latest_x_velocity=-latest_x_velocity
         if(coordinates[3]>=(self.canvas.winfo_height()) or coordinates[1]<0):
