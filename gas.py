@@ -1,9 +1,7 @@
 import numpy as np
 from Ball import *
-from ctypes.wintypes import RGB
 from tkinter import *
 from collections import namedtuple
-from functools import reduce
 
 class Gas:
     def __init__(self, interaction, number_of_particles, volumen, window, canvas):
@@ -17,7 +15,7 @@ class Gas:
         max_x_velocity=4
         max_y_velocity=4
 
-        radius = 5
+        radius = 4
         Color = namedtuple('Color', 'red green blue')
 
         initial_position_x = np.random.randint(10, self.volumen.width-1, self.number_of_particles)

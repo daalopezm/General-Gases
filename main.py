@@ -2,7 +2,7 @@ from ctypes.wintypes import RGB
 from tkinter import *
 import time
 from Ball import *
-from Gas import *
+from gas import *
 from collections import namedtuple
 from functools import partial
 
