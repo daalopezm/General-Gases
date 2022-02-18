@@ -66,7 +66,7 @@ class Gas:
         return final_velocity_x, final_velocity_y
 
     def move_gas(self, particles):
-        if self.interaction == 'col':
+        if self.interaction == "Coulomb potential gas":
             initial_x_position = [particles[i].x_position for i in range(self.number_of_particles)]
             initial_y_position = [particles[i].y_position for i in range(self.number_of_particles)]
             initial_x_velocity = [particles[i].x_velocity for i in range(self.number_of_particles)]
