@@ -37,26 +37,38 @@ def run():
         canvas.delete("all")
 
     def simulate():
-        interaction = clicked.get()
-        stop_program()
-        gas = Gas(interaction, number_of_particles, Volumen(width= WIDTH,height= HEIGHT), window, canvas)
+        try:
+            if number_of_particles != 0:
+        
+                interaction = clicked.get()
+                stop_program()
+                gas = Gas(interaction, number_of_particles, Volumen(width= WIDTH,height= HEIGHT), window, canvas)
 
-        global label
-        if interaction == "Coulomb potential gas":
-            label = "Coulomb potential gas"
-        elif interaction == "Ideal gas":
-            label = "Ideal gas"
-        else:
-            label = " "
-        label_1 = Label(window, text = label)
-        label_1.grid(row=4, column=1)
-        print(number_of_particles)
-        particles = gas.create_gas()
+                global label
+                if interaction == "Coulomb potential gas":
+                    label = "Coulomb potential gas"
+                elif interaction == "Ideal gas":
+                    label = "Ideal gas"
+                else:
+                    label = " "
+                label_1 = Label(window, text = label)
+                label_1.grid(row=4, column=1)
+                print(number_of_particles)
+                particles = gas.create_gas()
 
-        while True:        
-            gas.move_gas(particles)  
-            window.update()
-            time.sleep(0.01)
+                while True:        
+                    gas.move_gas(particles)  
+                    window.update()
+                    time.sleep(0.01)
+            
+            else:
+                mensaje =  "Ingresar un número de \n partículas mayor a 0"
+                messagebox.showerror("Error", mensaje)
+                raise ValueError(mensaje)
+
+        except ValueError as ve:
+            print(ve)
+
 
     options_of_interactions = ["Coulomb potential gas","Ideal Gas"]
     clicked = tkinter.StringVar(window)
@@ -65,16 +77,18 @@ def run():
     drop.config(width=20)
       
     button_1 = Button(window, text = "Simulate", command = simulate)
-    button_2 = Button(window, text='Stop', command = stop_program)
+    button_2 = Button(window, text = 'Stop', command = stop_program)
     entry = Entry(window)
     button_enter_number_particles = Button(window, text = "Enter", command = partial(change_number_of_particles,entry))
+    canvas.configure(bg='white')
     
+    drop.grid(row = 0, column = 0)
     button_1.grid(row = 1, column = 0)
     button_2.grid(row = 2, column = 0)   
     entry.grid(row = 3, column = 0)
     button_enter_number_particles.grid(row = 4, column = 0)    
     canvas.grid(row = 0, column = 1, rowspan = 4)
-    drop.grid(row = 0, column = 0)
+    
     window.mainloop()
 
 if __name__ == '__main__':

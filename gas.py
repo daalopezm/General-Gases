@@ -36,6 +36,8 @@ class Gas:
     def coulomb_interaction(self, charge, mass, initial_position_x, initial_position_y, initial_velocity_x, initial_velocity_y):
         final_velocity_x = []
         final_velocity_y = []
+        potential_energy = 0
+        kinetic_energy = 0
         interaction_matrix_x=np.zeros((self.number_of_particles,self.number_of_particles))
         interaction_matrix_y=np.zeros((self.number_of_particles,self.number_of_particles))
         k = 1
@@ -43,6 +45,10 @@ class Gas:
         for i in range(self.number_of_particles):
             for j in range(self.number_of_particles):
                 if i < j:
+                    #potential_matrix = -(k*charge/mass)*charge/(
+                     #   (initial_position_x[i]-initial_position_x[j])**2+(initial_position_y[i]-initial_position_y[j])**2)**0.5
+
+                    
                     interaction_matrix_x[i][j]=-(k*charge/mass)*charge/(
                         (initial_position_x[i]-initial_position_x[j])**2+(initial_position_y[i]-initial_position_y[j])**2)**1.5*(
                             initial_position_x[i]-initial_position_x[j])
@@ -54,6 +60,8 @@ class Gas:
                             initial_position_y[i]-initial_position_y[j])
 
                     interaction_matrix_y[j][i]=-interaction_matrix_y[i][j]
+                
+                    potential_energy = potential_energy + interaction_matrix_x[i][j]
 
             sum_colum_interaction_matrix_x=np.sum(interaction_matrix_x,axis=0)
             sum_colum_interaction_matrix_y=np.sum(interaction_matrix_y,axis=0)
@@ -81,3 +89,4 @@ class Gas:
         else:
             for i in range(self.number_of_particles):                
                 particles[i].move(particles[i].x_velocity,particles[i].y_velocity)   
+
