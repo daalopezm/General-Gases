@@ -22,4 +22,3 @@ class Ball:
         self.y_position = self.canvas.coords(self.figure)[1]+self.radius
         self.x_velocity = latest_x_velocity
         self.y_velocity = latest_y_velocity
-

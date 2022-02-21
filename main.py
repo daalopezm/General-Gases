@@ -11,8 +11,8 @@ number_of_particles=0
 
 def run():
 
-    WIDTH = 900
-    HEIGHT = 600
+    WIDTH = 600
+    HEIGHT = 400
     window = Tk()
     window.title("Gas simulator")
     window.iconbitmap('./icons/icons8-gas-storage-32.ico')
@@ -53,11 +53,14 @@ def run():
                     label = " "
                 label_1 = Label(window, text = label)
                 label_1.grid(row=4, column=1)
+                
                 print(number_of_particles)
                 particles = gas.create_gas()
 
                 while True:        
                     gas.move_gas(particles)  
+                    label_energy = Label(window, text = f"Energy = {round(gas.energy,2)}")
+                    label_energy.grid(row=5, column=0)
                     window.update()
                     time.sleep(0.01)
             
@@ -68,7 +71,6 @@ def run():
 
         except ValueError as ve:
             print(ve)
-
 
     options_of_interactions = ["Coulomb potential gas","Ideal Gas"]
     clicked = tkinter.StringVar(window)
