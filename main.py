@@ -61,7 +61,7 @@ def run():
                     gas.move_gas(particles)  
                     label_energy = Label(window, text = f"Energy = {round(gas.energy,2)}")
                     label_energy.grid(row=5, column=0)
-                    window.update()
+                    canvas.update()
                     time.sleep(0.01)
             
             else:

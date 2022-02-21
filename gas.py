@@ -8,6 +8,7 @@ energy = 0
 K = 8.9*10**9
 DELTA_T = 0.0001
 RADIUS = 4
+MAX_VELOCITY = 3
 
 class Gas:
     def __init__(self, interaction, number_of_particles, volumen, window, canvas):
@@ -17,26 +18,20 @@ class Gas:
         self.window = window
         self.canvas = canvas
         self.energy = energy
+        self.max_x_velocity = MAX_VELOCITY
+        self.max_y_velocity = MAX_VELOCITY
     
-    def create_gas(self):
-        max_x_velocity = 4
-        max_y_velocity = 4
+    def create_gas(self):        
         
-        Color = namedtuple('Color', 'red green blue')
-
         initial_position_x = np.random.randint(10, self.volumen.width-1, self.number_of_particles)
-        initial_velocity_x = np.random.randint(-max_x_velocity, max_x_velocity, self.number_of_particles)
+        initial_velocity_x = np.random.randint(-self.max_x_velocity, self.max_x_velocity, self.number_of_particles)
         initial_position_y = np.random.randint(10, self.volumen.height-1, self.number_of_particles)
-        initial_velocity_y = np.random.randint(-max_y_velocity, max_y_velocity, self.number_of_particles)
-
-        colors_depending_on_velocity = lambda x_vel, y_vel: Color(round((x_vel**2 + y_vel**2)**0.5*255/((
-            max_y_velocity**2 + max_x_velocity**2)**0.5)), 139, 116)
+        initial_velocity_y = np.random.randint(-self.max_y_velocity, self.max_y_velocity, self.number_of_particles)
 
         particles=[Ball(self.canvas, initial_position_x[i], initial_position_y[i],
-            initial_velocity_x[i], initial_velocity_y[i], RADIUS, 
-            colors_depending_on_velocity(initial_velocity_x[i], initial_velocity_y[i])) for i in range(self.number_of_particles)]
+            initial_velocity_x[i], initial_velocity_y[i], RADIUS, MAX_VELOCITY) for i in range(self.number_of_particles)]
 
-        return particles     
+        return particles
 
     def coulomb_interaction(self, charge, mass, initial_position_x, initial_position_y, initial_velocity_x, initial_velocity_y):
         final_velocity_x = []
@@ -87,11 +82,13 @@ class Gas:
             initial_y_velocity = [particles[i].y_velocity for i in range(self.number_of_particles)]
 
             final_x_velocity, final_y_velocity = self.coulomb_interaction(
-                    0.0001, 0.00005, initial_x_position, initial_y_position, initial_x_velocity, initial_y_velocity)
+                    0.001, 0.0005, initial_x_position, initial_y_position, initial_x_velocity, initial_y_velocity)
 
-            for i in range(self.number_of_particles):                
-                particles[i].move(final_x_velocity[i],final_y_velocity[i])
+            velocity = pow(pow(np.array(final_x_velocity),2)+pow(np.array(final_y_velocity),2),0.5)
+
+            for i in range(self.number_of_particles):                                
+                particles[i].move(final_x_velocity[i], final_y_velocity[i], max(velocity))            
 
         else:
             for i in range(self.number_of_particles):                
-                particles[i].move(particles[i].x_velocity,particles[i].y_velocity)   
+                particles[i].move(particles[i].x_velocity, particles[i].y_velocity)   
