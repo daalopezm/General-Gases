@@ -57,12 +57,12 @@ def run():
                 print(number_of_particles)
                 particles = gas.create_gas()
 
-                while True:        
+                while True:      
                     gas.move_gas(particles)  
                     label_energy = Label(window, text = f"Energy = {round(gas.energy,2)}")
                     label_energy.grid(row=5, column=0)
                     canvas.update()
-                    time.sleep(0.01)
+                    time.sleep(0.001)
             
             else:
                 mensaje =  "Ingresar un número de \n partículas mayor a 0"

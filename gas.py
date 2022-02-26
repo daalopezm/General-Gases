@@ -6,9 +6,9 @@ from collections import namedtuple
 
 energy = 0
 K = 8.9*10**9
-DELTA_T = 0.0001
+DELTA_T = 0.00001
 RADIUS = 4
-MAX_VELOCITY = 3
+MAX_VELOCITY = 2
 
 class Gas:
     def __init__(self, interaction, number_of_particles, volumen, window, canvas):
@@ -60,6 +60,7 @@ class Gas:
                     interaction_matrix_y[j][i]=-interaction_matrix_y[i][j]
                 
                     potential_energy += potential_matrix[i][j]
+                
 
             sum_colum_interaction_matrix_x=np.sum(interaction_matrix_x,axis=0)
             sum_colum_interaction_matrix_y=np.sum(interaction_matrix_y,axis=0)
@@ -75,12 +76,12 @@ class Gas:
         return final_velocity_x, final_velocity_y
 
     def move_gas(self, particles):
+        initial_x_position = [particles[i].x_position for i in range(self.number_of_particles)]
+        initial_y_position = [particles[i].y_position for i in range(self.number_of_particles)]
+        initial_x_velocity = [particles[i].x_velocity for i in range(self.number_of_particles)]
+        initial_y_velocity = [particles[i].y_velocity for i in range(self.number_of_particles)]
+        
         if self.interaction == "Coulomb potential gas":
-            initial_x_position = [particles[i].x_position for i in range(self.number_of_particles)]
-            initial_y_position = [particles[i].y_position for i in range(self.number_of_particles)]
-            initial_x_velocity = [particles[i].x_velocity for i in range(self.number_of_particles)]
-            initial_y_velocity = [particles[i].y_velocity for i in range(self.number_of_particles)]
-
             final_x_velocity, final_y_velocity = self.coulomb_interaction(
                     0.001, 0.0005, initial_x_position, initial_y_position, initial_x_velocity, initial_y_velocity)
 
@@ -90,5 +91,6 @@ class Gas:
                 particles[i].move(final_x_velocity[i], final_y_velocity[i], max(velocity))            
 
         else:
-            for i in range(self.number_of_particles):                
-                particles[i].move(particles[i].x_velocity, particles[i].y_velocity)   
+            velocity = pow(pow(np.array(initial_x_velocity),2)+pow(np.array(initial_y_velocity),2),0.5)
+            for i in range(self.number_of_particles):            
+                particles[i].move(particles[i].x_velocity, particles[i].y_velocity, max(velocity)) 

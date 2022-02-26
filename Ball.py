@@ -21,7 +21,6 @@ class Ball:
     def move(self,latest_x_velocity, latest_y_velocity, max_velocity):
 
         coordinates = self.canvas.coords(self.figure)
-
         
         if(coordinates[2]>=(self.canvas.winfo_width()) or coordinates[0]<0):
             latest_x_velocity=-latest_x_velocity
@@ -44,4 +43,4 @@ class Ball:
 
         self.canvas.itemconfigure(self.figure, 
                     fill='#{:02X}{:02X}{:02X}'.format(self.color.red, self.color.green, self.color.blue))
-        
+          
