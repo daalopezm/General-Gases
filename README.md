@@ -1,4 +1,4 @@
-<h1>General</h1>
+<h1>General Gases</h1>
 
 <p>Gases with arbitrary interactions
 Here you can find a small simmulator of an ideal gas and a coulumb interaction, all with the same charge.</p>
