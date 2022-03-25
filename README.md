@@ -1,5 +1,7 @@
 <h1>General Gases</h1>
 
+![Simulation image](https://github.com/daalopezm/Web-page-with-flask-and-bootstrap/blob/main/static/videos/programming/gas_explanation/Gas_sim.png?raw=true)
+
 <p>Gases with arbitrary interactions
 Here you can find a small simmulator of an ideal gas and a coulumb interaction, all with the same charge.</p>
 
@@ -13,7 +15,13 @@ Here you can find a small simmulator of an ideal gas and a coulumb interaction, 
 </p>
 
 <h2>How it works?</h2>
-<p>You must insert a number</p> ![alt text](https://user-images.githubusercontent.com/221550/110506678-51906280-80cd-11eb-803a-c41984bd9312.png)
+<p>Yo must insert in the field the number of particles that you wanna render. Then, click "enter"</p>
+
+![alt text](https://infinite-thicket-70020.herokuapp.com/static/videos/programming/gas_explanation/field.png)
+
+<p>In the dropdown menu, select the interaction and click in simulate. The fastest particle, more red it is and the
+        darkest are slower than the red one.
+    </p>
 
 <h2>Skills developed</h2>
 <p> In order to make the interface of the program, I used Tkinter, and Object Oriented Programming was used.
