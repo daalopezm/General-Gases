@@ -12,6 +12,9 @@ Here you can find a small simmulator of an ideal gas and a coulumb interaction, 
   </ol>
 </p>
 
+<h2>How it works?</h2>
+<p>You must insert a number ![](https://user-images.githubusercontent.com/221550/110506678-51906280-80cd-11eb-803a-c41984bd9312.png)</p>
+
 <h2>Skills developed</h2>
 <p> In order to make the interface of the program, I used Tkinter, and Object Oriented Programming was used.
 Some basic knowledge of physics were used, like electrostatics and integration. The velocities of each particle are obtained from the forces. This is passed to the move method in the canvas class of Tkinter. This project reinforce my knowledge in basic Python and the design of interfaces. </p>
